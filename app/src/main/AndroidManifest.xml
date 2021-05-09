@@ -16,7 +16,7 @@
     tools:ignore="GoogleAppIndexingWarning">
 
     <activity
-      android:name="com.nikita.game.MainActivity"
+      android:name="com.nikita.game.GameActivity"
       android:label="@string/app_name">
 
       <intent-filter>

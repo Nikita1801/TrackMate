@@ -14,11 +14,15 @@ import com.nikita.game.renderer.RendererFactory;
 
 public class MainActivity extends AppCompatActivity implements Visualizer.OnDataCaptureListener {
 
+    //забрать
     private static final int CAPTURE_SIZE = 256;
     private static final int REQUEST_CODE = 0;
     static final String[] PERMISSIONS = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.MODIFY_AUDIO_SETTINGS};
 
+    //забрать
     private Visualizer visualiser;
+
+
     private WaveformView waveformView;
 
     @Override
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements Visualizer.OnData
         waveformView.setRenderer(rendererFactory.createSimpleWaveformRenderer(Color.GREEN, Color.DKGRAY));
     }
 
+    //забрать
     @Override
     protected void onResume() {
         super.onResume();
@@ -46,10 +51,12 @@ public class MainActivity extends AppCompatActivity implements Visualizer.OnData
         }
     }
 
+    //забрать
     private void startPermissionsActivity() {
         PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
     }
 
+    //забрать
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -58,12 +65,14 @@ public class MainActivity extends AppCompatActivity implements Visualizer.OnData
         }
     }
 
+    //забрать
     private void startVisualiser() {
         visualiser = new Visualizer(0);
         visualiser.setDataCaptureListener(this, Visualizer.getMaxCaptureRate(), true, false);
         visualiser.setCaptureSize(CAPTURE_SIZE);
         visualiser.setEnabled(true);
     }
+
 
     @Override
     public void onWaveFormDataCapture(Visualizer thisVisualiser, byte[] waveform, int samplingRate) {
@@ -72,11 +81,13 @@ public class MainActivity extends AppCompatActivity implements Visualizer.OnData
         }
     }
 
+
     @Override
     public void onFftDataCapture(Visualizer thisVisualiser, byte[] fft, int samplingRate) {
         // NO-OP
     }
 
+    //забрать
     @Override
     protected void onPause() {
         if (visualiser != null) {
