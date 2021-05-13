@@ -21,13 +21,15 @@ import com.nikita.game.permissions.PermissionsChecker;
 public class GameActivity extends Activity implements Visualizer.OnDataCaptureListener {
 
     final static String ACTIVITY_TAG = "GameActivity";
+    public final int timerInterval = 800;
+    private boolean sound;
 
-    //забрать
+    //from main
     private static final int CAPTURE_SIZE = 256;
     private static final int REQUEST_CODE = 0;
     static final String[] PERMISSIONS = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.MODIFY_AUDIO_SETTINGS};
 
-    //забрать
+    //from main
     private Visualizer visualiser;
 
 
@@ -45,6 +47,8 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Timer t = new Timer();
+        t.start();
         instant = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
@@ -92,8 +96,10 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
         if(x <= 30){
             x =  2* button.getWidth();
         } else if(x >= constraintLayout.getWidth() - 30){
-            x = constraintLayout.getWidth() - 4 * button.getWidth();
+            x = constraintLayout.getWidth() - 2 * button.getWidth();
         }
+
+
 
         if(y <= 30){
             y = 2* button.getHeight();
@@ -123,9 +129,9 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
 
 
 
-    // from mainactivity
+    // everything below from main
 
-    //забрать
+    //from main
     @Override
     protected void onResume() {
         super.onResume();
@@ -138,12 +144,12 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
         }
     }
 
-    //забрать
+    //from main
     private void startPermissionsActivity() {
         PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
     }
 
-    //забрать
+    //from main
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -152,7 +158,7 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
         }
     }
 
-    //забрать
+    //from main
     private void startVisualiser() {
         visualiser = new Visualizer(0);
         visualiser.setDataCaptureListener(this, Visualizer.getMaxCaptureRate(), true, false);
@@ -160,7 +166,7 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
         visualiser.setEnabled(true);
     }
 
-    //забрать
+    //from main
     @Override
     protected void onPause() {
         if (visualiser != null) {
@@ -172,15 +178,22 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
     }
 
     private void maxWaveform(byte[] waveform){
+        sound = false;
         int max = 0;
         for(int i = 0; i < waveform.length; i++){
-            Log.d(ACTIVITY_TAG, max + " outer");
+//            Log.d(ACTIVITY_TAG, max + " outer");
             if (waveform[i] > max){
 
                 max = waveform[i];
-                Log.d(ACTIVITY_TAG, max + " ");
-                GameActivity.getInstant().MoveButton();
+ //               Log.d(ACTIVITY_TAG, max + " ");
+                sound = true;
+  //              GameActivity.getInstant().MoveButton();
             }
+        }
+    }
+    protected void update(){
+        if (sound){
+            GameActivity.getInstant().MoveButton();
         }
     }
 
