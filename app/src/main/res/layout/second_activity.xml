@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/guitar4mob"
-    tools:context=".SecondActivity">
+    android:background="@drawable/guitar4mob">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,6 +26,54 @@
             android:layout_marginTop="80sp"
             android:layout_marginRight="30sp"
             app:srcCompat="@drawable/logobackground" />
+
+        <TextView
+            android:id="@+id/textScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:text="SCORE"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+
+        <Button
+            android:id="@+id/startbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="105sp"
+            android:layout_marginTop="40sp"
+            android:layout_marginRight="105sp"
+            android:background="@drawable/corner"
+            android:backgroundTint="#FFFFFF"
+            android:shadowColor="#FFFFFF"
+            android:text="start"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/logoutbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="105sp"
+            android:layout_marginTop="40sp"
+            android:layout_marginRight="105sp"
+            android:background="@drawable/corner"
+            android:backgroundTint="#FFFFFF"
+            android:shadowColor="#FFFFFF"
+            android:text="log out"
+            android:textSize="20sp" />
+
+
 
     </LinearLayout>
 

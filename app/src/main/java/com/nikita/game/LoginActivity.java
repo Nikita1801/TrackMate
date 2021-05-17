@@ -69,8 +69,6 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                 if(task.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "Авторизация успешна", Toast.LENGTH_LONG).show();
 
-
-
                    Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
                    startActivity(intent);
 
