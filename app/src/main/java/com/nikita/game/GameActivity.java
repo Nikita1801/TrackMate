@@ -23,6 +23,7 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
     final static String ACTIVITY_TAG = "GameActivity";
     public final int timerInterval = 800;
     private boolean sound;
+    private int Score = 0;
 
     //from main
     private static final int CAPTURE_SIZE = 256;
@@ -80,9 +81,20 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
             @Override
             public void onClick(View v) {
                 ChangeButtonPosition(v);
+                addScoreForClick(20);
             }
         });
 
+    }
+
+    private void addScoreForClick(int score) {
+        Score += score;
+        Log.d(ACTIVITY_TAG, "score now is " + Score );
+    }
+
+    public void minusScoreForClick(int score) {
+        Score -= score;
+        Log.d(ACTIVITY_TAG, "score now is " + Score );
     }
 
     private void ChangeButtonPosition (View button){
@@ -196,6 +208,7 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
             GameActivity.getInstant().MoveButton();
         }
     }
+
 
 }
 

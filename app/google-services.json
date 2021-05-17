@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "603272850319",
+    "project_id": "visualiser-7a219",
+    "storage_bucket": "visualiser-7a219.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603272850319:android:86929901344f10564539fa",
+        "android_client_info": {
+          "package_name": "com.nikitamakarevich.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603272850319-bsvgo11tmli3nv4erd4k7cisd5dhji9c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzp57kY3y9VqHJQrzq7QYcYDPevIxpx90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603272850319-bsvgo11tmli3nv4erd4k7cisd5dhji9c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
