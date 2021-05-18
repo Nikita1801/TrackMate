@@ -2,10 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".GameActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#000000"
+    android:orientation="vertical"
+    tools:context=".GameActivity">
+
+    <TextView
+        android:id="@+id/scoreView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#000000"
+        android:text="Score: 0"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constr"
@@ -21,6 +32,7 @@
             android:background="@drawable/point_experemental2_"
             android:scaleType="fitCenter"
             app:layout_constraintTop_toTopOf="parent"
+
             tools:layout_editor_absoluteX="152dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

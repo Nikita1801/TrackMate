@@ -10,20 +10,37 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nikita.game.permissions.PermissionsActivity;
 import com.nikita.game.permissions.PermissionsChecker;
+
+import org.jetbrains.annotations.NotNull;
 
 public class GameActivity extends Activity implements Visualizer.OnDataCaptureListener {
 
     final static String ACTIVITY_TAG = "GameActivity";
     public final int timerInterval = 800;
     private boolean sound;
-    private int Score = 0;
+    public int Score = 0;
+    FirebaseUser user;
+    DatabaseReference reference;
+    private  int remoteScore;
 
     //from main
     private static final int CAPTURE_SIZE = 256;
@@ -38,8 +55,10 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
     private int viewHeight;
 
     Button btn;
-
+    Timer t;
     ImageButton imageButton;
+    TextView scoreTextView;
+
 
     static GameActivity instant;
     public static GameActivity getInstant(){
@@ -48,13 +67,20 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        Timer t = new Timer();
+        t = new Timer();
         t.start();
         instant = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
 
         imageButton = (ImageButton) findViewById(R.id.imageButton2);
+
+        scoreTextView = findViewById(R.id.scoreView);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference();
+
+
 
         ConstraintLayout constraintLayout = (ConstraintLayout)findViewById(R.id.constr);
 //        btn = new Button(this);
@@ -77,14 +103,37 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
 //            }
 //        });
 
+
+        reference.child("Score").child(user.getUid()).child("result").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                remoteScore = Integer.parseInt(String.valueOf(snapshot.getValue()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "Что-то пошло не так", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ChangeButtonPosition(v);
                 addScoreForClick(20);
+                refreshScore(Score);
+                t.resetCounter();
+
             }
         });
 
+
+
+    }
+
+    private void refreshScore(int score){
+        scoreTextView.setText("Score: " + score);
     }
 
     private void addScoreForClick(int score) {
@@ -94,7 +143,11 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
 
     public void minusScoreForClick(int score) {
         Score -= score;
+        if(Score <0){
+            Score = 0;
+        }
         Log.d(ACTIVITY_TAG, "score now is " + Score );
+        refreshScore(Score);
     }
 
     private void ChangeButtonPosition (View button){
@@ -181,12 +234,16 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
     //from main
     @Override
     protected void onPause() {
+        super.onPause();
         if (visualiser != null) {
             visualiser.setEnabled(false);
             visualiser.release();
             visualiser.setDataCaptureListener(null, 0, false, false);
         }
-        super.onPause();
+
+
+
+
     }
 
     private void maxWaveform(byte[] waveform){
@@ -210,6 +267,25 @@ public class GameActivity extends Activity implements Visualizer.OnDataCaptureLi
     }
 
 
+    @Override
+    protected void onDestroy() {
+
+        if (Score > remoteScore){
+            reference.child("Score").child(user.getUid()).child("result").setValue(Score).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                @Override
+                public void onComplete(@NonNull @NotNull Task<Void> task) {
+                    if (task.isSuccessful()){
+                        Toast.makeText(GameActivity.this, "Рекорд сохранен", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                        Toast.makeText(GameActivity.this, "Что-то пошло не так", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        super.onDestroy();
+    }
 }
 
 

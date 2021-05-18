@@ -15,10 +15,13 @@ public class Timer extends CountDownTimer {
     public void onTick(long millisUntilFinished) {
         GameActivity.getInstant().update();
         if(counter == degradationOfScoreInterval){
-            GameActivity.getInstant().minusScoreForClick(1);
+            GameActivity.getInstant().minusScoreForClick(5);
             counter=0;
         }
         counter++;
+    }
+    public void resetCounter(){
+        counter = 0;
     }
 
     @Override
