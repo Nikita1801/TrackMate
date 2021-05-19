@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import org.jetbrains.annotations.NotNull;
 
 
-public class LoginActivity extends AppCompatActivity implements  View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText ETEmailAddress;
     private EditText ETPassword;
     private Button signIn;
@@ -52,41 +52,39 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
 
     }
 
-    public void onClick(View view){
-        if(view.getId() == R.id.login){
+    public void onClick(View view) {
+        if (view.getId() == R.id.login) {
             signing(ETEmailAddress.getText().toString(), ETPassword.getText().toString());
-        }
-        else if(view.getId() == R.id.registration){
+        } else if (view.getId() == R.id.registration) {
             registration(ETEmailAddress.getText().toString(), ETPassword.getText().toString());
         }
 
     }
 
-    public void signing(String email, String password){
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+    public void signing(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Авторизация успешна", Toast.LENGTH_LONG).show();
 
-                   Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
-                   startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
+                    startActivity(intent);
 
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Авторизация провалена", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
-    public void registration(String email, String password){
+    public void registration(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Toast.makeText(LoginActivity.this, "Регистрация успешна", Toast.LENGTH_LONG).show();
-                }
-                else
+                } else
                     Toast.makeText(LoginActivity.this, "Регистрация провалена", Toast.LENGTH_LONG).show();
 
             }

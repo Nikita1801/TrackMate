@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
-public class SecondActivity extends AppCompatActivity{
+public class SecondActivity extends AppCompatActivity {
     private Button startButton;
     private Button logoutButton;
     FirebaseUser user;
@@ -37,7 +37,7 @@ public class SecondActivity extends AppCompatActivity{
         addListennerOnButton();
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference();
-        score =(TextView) findViewById(R.id.totalScore);
+        score = (TextView) findViewById(R.id.totalScore);
         reference.child("Score").child(user.getUid()).child("result").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -51,17 +51,17 @@ public class SecondActivity extends AppCompatActivity{
         });
 
 
-
     }
-    public void addListennerOnButton(){
+
+    public void addListennerOnButton() {
         startButton = (Button) findViewById(R.id.startbutton);
-        logoutButton= (Button) findViewById(R.id.logoutbutton);
+        logoutButton = (Button) findViewById(R.id.logoutbutton);
 
 
         startButton.setOnClickListener(
-                new View.OnClickListener(){
+                new View.OnClickListener() {
                     @Override
-                    public  void onClick(View v){
+                    public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                         startActivity(intent);
                     }
@@ -69,9 +69,9 @@ public class SecondActivity extends AppCompatActivity{
         );
 
         logoutButton.setOnClickListener(
-                new View.OnClickListener(){
+                new View.OnClickListener() {
                     @Override
-                    public  void onClick(View v){
+                    public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                     }
@@ -79,10 +79,9 @@ public class SecondActivity extends AppCompatActivity{
         );
 
 
-
     }
 
 
-    }
+}
 
 
