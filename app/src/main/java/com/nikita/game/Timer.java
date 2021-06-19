@@ -3,7 +3,7 @@ package com.nikita.game;
 import android.os.CountDownTimer;
 
 public class Timer extends CountDownTimer {
-    public static final int timerInterval = 600;
+    public static final int timerInterval = 1000;
     public static final int degradationOfScoreInterval = 5;
     private int counter = 0;
     public Timer(){

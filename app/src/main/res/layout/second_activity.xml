@@ -45,7 +45,8 @@
 
             android:text="0"
             android:textColor="#FFFFFF"
-            android:textSize="34sp" />
+            android:textSize="34sp"
+            />
 
         <Button
             android:id="@+id/startbutton"
@@ -73,6 +74,17 @@
             android:text="log out"
             android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text='Turn on music in any app'
+
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="50sp"
+            android:textSize="20sp"
+            />
 
 
     </LinearLayout>
